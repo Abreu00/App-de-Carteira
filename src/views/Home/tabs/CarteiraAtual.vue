@@ -3,9 +3,7 @@
     <v-row justify="center">
       <Doughnut />
     </v-row>
-    <v-btn color="amber darken-4" dark @click="popup = true"
-      >Editar carteira</v-btn
-    >
+    <v-btn color="amber darken-4" dark @click="popup = true">Editar carteira</v-btn>
   </v-container>
 </template>
 
