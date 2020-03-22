@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home";
 import Goals from "../views/Goals";
+import Consolidada from "../views/Consolidada";
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: "/goals",
     name: "Goals",
     component: Goals
+  },
+  {
+    path: "/consolidada",
+    name: "Consolidada",
+    component: Consolidada
   }
 ];
 

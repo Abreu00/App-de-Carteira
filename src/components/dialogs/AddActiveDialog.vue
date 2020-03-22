@@ -11,27 +11,13 @@
             </v-radio-group>
           </v-col>
           <v-col class="flex-grow-1">
-            <v-text-field
-              v-model="paperName"
-              class="mr-2"
-              label="Nome do papel"
-            ></v-text-field>
-            <v-text-field
-              v-model="numberOfPapers"
-              label="Número de cotas"
-              type="number"
-            ></v-text-field>
+            <v-text-field v-model="paperName" class="mr-2" label="Nome do papel"></v-text-field>
+            <v-text-field v-model="numberOfPapers" label="Número de cotas" type="number"></v-text-field>
           </v-col>
         </v-row>
         <v-row justify="end">
           <v-btn text color="red" @click="close">Cancelar</v-btn>
-          <v-btn
-            class="mr-4"
-            text
-            color="blue darken-2"
-            @click="handleNewActive"
-            >Adicionar</v-btn
-          >
+          <v-btn class="mr-4" text color="blue darken-2" @click="handleNewActive">Adicionar</v-btn>
         </v-row>
       </v-container>
     </v-card>
