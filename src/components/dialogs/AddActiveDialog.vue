@@ -1,21 +1,11 @@
 <template>
   <v-dialog v-model="visible" max-width="400" @click:outside="close">
     <v-card class="px-4 pb-2">
-      <v-card-title class="px-0">Adicionar ativo</v-card-title>
+      <v-card-title class="px-0">{{isBuying ? "Nova Compra" : "Nova venda"}}</v-card-title>
       <v-container class="py-0 px-2">
-        <v-row justify="center" align="start">
-          <v-col class="flex-grow-0 mr-2">
-            <v-radio-group v-model="typeOfActive" :mandatory="true">
-              <v-radio label="Ação" value="Ação" />
-              <v-radio label="FII" value="FII" />
-            </v-radio-group>
-          </v-col>
-          <v-col class="flex-grow-1">
-            <v-text-field v-model="paperName" class="mr-2" label="Nome do papel"></v-text-field>
-            <v-text-field v-model="numberOfPapers" label="Número de cotas" type="number"></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row justify="end">
+        <v-autocomplete :items="options" label="Ticker"></v-autocomplete>
+        <v-text-field v-model="numberOfPapers" label="Número de cotas" type="number"></v-text-field>
+        <v-row justify="end" class="mt-4">
           <v-btn text color="red" @click="close">Cancelar</v-btn>
           <v-btn class="mr-4" text color="blue darken-2" @click="handleNewActive">Adicionar</v-btn>
         </v-row>
@@ -30,12 +20,18 @@ import IDB from "../../IndexedDB";
 export default {
   name: "AddActiveDialog",
   props: {
-    value: Boolean
+    value: Boolean,
+    isBuying: {
+      type: Boolean,
+      required: false,
+      default: true
+    }
   },
   data: () => ({
     typeOfActive: "",
     paperName: "",
-    numberOfPapers: ""
+    numberOfPapers: "",
+    options: ["ABEV3", "WEGE3", "ENGIE3"]
   }),
   methods: {
     close() {
