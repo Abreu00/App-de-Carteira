@@ -41,6 +41,7 @@ import Doughnut from "@/components/charts/Doughnut.js";
 import ChartContainer from "@/components/charts/ChartContainer";
 import OnWalletActive from "@/components/OnWalletActive";
 import COLORS from "@/components/charts/colors.js";
+import firestore from "@/firestore.js";
 
 export default {
   name: "Home",
@@ -57,6 +58,10 @@ export default {
     colors() {
       return COLORS.map(color => color.vuetify);
     }
+  },
+  async created() {
+    const req = await firestore.collection("actives").get();
+    console.log(req.docs[0].data());
   },
   methods: {
     tooglePopUp() {
