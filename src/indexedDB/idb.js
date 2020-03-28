@@ -1,5 +1,5 @@
 const DB_NAME = "APP_DB";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 let DB;
 
 export default {
@@ -23,6 +23,11 @@ export default {
           db.createObjectStore("stocks", {
             keyPath: "key",
             autoIncrement: true
+          });
+        } else if (e.oldVersion < 2) {
+          db.deleteObjectStore("stocks");
+          db.createObjectStore("stocks", {
+            keyPath: "ticker"
           });
         }
       };

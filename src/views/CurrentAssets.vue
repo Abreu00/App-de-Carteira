@@ -14,13 +14,13 @@
       </v-card-title>
       <v-container>
         <ChartContainer>
-          <Doughnut :actives="actives" />
+          <Doughnut :actives="$store.state.actives" />
         </ChartContainer>
       </v-container>
       <v-list>
-        <div v-for="number in 5" :key="number">
+        <div v-for="(active, index) in $store.state.actives" :key="index">
           <v-divider class="blue lighten-3" />
-          <OnWalletActive ticker="WEGE3" :vuetifyColor="colors[number - 1]" />
+          <OnWalletActive :ticker="active.ticker" :vuetifyColor="colors[index]" />
         </div>
       </v-list>
     </v-card>
@@ -39,7 +39,6 @@ import ChartContainer from "@/components/charts/ChartContainer";
 import OnWalletActive from "@/components/OnWalletActive";
 import COLORS from "@/components/charts/colors.js";
 //import firestore from "@/firestore.js";
-import ActiveModel from "../indexedDB/ActiveModel.js";
 
 export default {
   name: "Home",
@@ -53,18 +52,12 @@ export default {
     popup: {
       isVisible: false,
       isBuying: null
-    },
-    actives: []
+    }
   }),
   computed: {
     colors() {
       return COLORS.map(color => color.vuetify);
     }
-  },
-  async created() {
-    //const req = await firestore.collection("actives").get();
-    //req.docs.forEach(doc => console.log(doc.data()));
-    this.actives = await ActiveModel.getAll();
   },
   methods: {
     tooglePopUp(_, isBuying) {

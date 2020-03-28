@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <Active
-      v-for="(active, index) in actives"
+      v-for="(active, index) in $store.state.actives"
       :key="index"
       :ticker="active.ticker"
       :difference="index % 2 === 0 ? 100: -100"
@@ -13,7 +13,6 @@
 </template>
 <script>
 import Active from "../components/Active";
-import ActiveModel from "../indexedDB/ActiveModel.js";
 import AddActiveDialog from "@/components/dialogs/AddActiveDialog";
 
 export default {
@@ -23,15 +22,11 @@ export default {
     AddActiveDialog
   },
   data: () => ({
-    actives: [],
     popup: {
       isVisible: false,
       ticker: ""
     }
   }),
-  async created() {
-    this.actives = await ActiveModel.getAll();
-  },
   methods: {
     activeClick(_, ticker) {
       this.popup = {

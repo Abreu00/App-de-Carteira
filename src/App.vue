@@ -11,7 +11,7 @@
 <script>
 import Header from "./components/Header";
 import Nav from "./components/Nav";
-import idb from "./indexedDB/idb";
+import ActiveModel from "./indexedDB/ActiveModel";
 
 export default {
   name: "App",
@@ -19,8 +19,9 @@ export default {
     Header,
     Nav
   },
-  created() {
-    idb.getDB();
+  async created() {
+    const actives = await ActiveModel.getAll();
+    this.$store.commit("setActives", actives);
   }
 };
 </script>

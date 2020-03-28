@@ -9,7 +9,7 @@
       <v-container class="py-0 px-2">
         <v-text-field v-if="defaultTicker" label="Ticker" :value="defaultTicker" disabled />
         <v-autocomplete v-else :items="options" label="Ticker" />
-        <v-text-field v-model="numberOfPapers" label="Número de cotas" type="number"></v-text-field>
+        <v-text-field required v-model="numberOfPapers" label="Número de cotas" type="number"></v-text-field>
         <v-row justify="end" class="mt-4">
           <v-btn text color="red" @click="close">Cancelar</v-btn>
           <v-btn class="mr-4" text color="blue darken-2" @click="handleNewActive">Adicionar</v-btn>

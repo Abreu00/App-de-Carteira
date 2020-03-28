@@ -34,7 +34,7 @@
         </v-card-title>
         <v-container>
           <ChartContainer>
-            <Doughnut :actives="actives" />
+            <Doughnut :actives="$store.state.actives" />
           </ChartContainer>
         </v-container>
       </v-card>
@@ -44,7 +44,6 @@
 
 <script>
 import EditWallet from "@/components/EditWallet";
-import ActiveModel from "../indexedDB/ActiveModel";
 import Doughnut from "@/components/charts/Doughnut.js";
 import ChartContainer from "@/components/charts/ChartContainer";
 
@@ -61,12 +60,7 @@ export default {
     ChartContainer
   },
   async created() {
-    const len = await ActiveModel.len();
-    if (len > 0) {
-      this.exists = true;
-      this.actives = await ActiveModel.getAll();
-      console.log(this.actives);
-    }
+    this.exists = this.$store.state.actives.length > 0;
   },
   methods: {
     cleanWallet() {
