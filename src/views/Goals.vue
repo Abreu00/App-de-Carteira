@@ -1,18 +1,44 @@
 <template>
   <v-container>
-    <Active ticker="WEGE3" :difference="150" :quotes="12" />
-    <Active ticker="ABEV3" :difference="-90" :quotes="31" />
-    <Active ticker="ITSA4" :difference="-200" :quotes="8" />
-    <Active ticker="MDIA3" :difference="20" :quotes="4" />
-    <Active ticker="HGLG11" :difference="250" :quotes="2" />
+    <Active
+      v-for="(active, index) in actives"
+      :key="index"
+      :ticker="active.ticker"
+      :difference="index % 2 === 0 ? 100: -100"
+      :quotes="active.quotes"
+      @click.native="activeClick($event, active.ticker)"
+    />
+    <AddActiveDialog v-model="popup.isVisible" :defaultTicker="popup.ticker" />
   </v-container>
 </template>
 <script>
 import Active from "../components/Active";
+import ActiveModel from "../indexedDB/ActiveModel.js";
+import AddActiveDialog from "@/components/dialogs/AddActiveDialog";
+
 export default {
   name: "Goals",
   components: {
-    Active
+    Active,
+    AddActiveDialog
+  },
+  data: () => ({
+    actives: [],
+    popup: {
+      isVisible: false,
+      ticker: ""
+    }
+  }),
+  async created() {
+    this.actives = await ActiveModel.getAll();
+  },
+  methods: {
+    activeClick(_, ticker) {
+      this.popup = {
+        isVisible: true,
+        ticker
+      };
+    }
   }
 };
 </script>

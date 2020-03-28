@@ -3,21 +3,18 @@
     <v-card>
       <v-card-title class="justify-space-between">
         <span>Carteira Atual</span>
-        <v-menu :offset-y="true">
-          <template v-slot:activator="{ on }">
-            <v-btn icon slot="activator" v-on="on">
-              <v-icon>more_horiz</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
-            <v-list-item @click="tooglePopUp">Nova compra</v-list-item>
-            <v-list-item @click="tooglePopUp">Nova venda</v-list-item>
-          </v-list>
-        </v-menu>
+        <div>
+          <v-btn icon @click="tooglePopUp($event, false)" class="red--text mr-1">
+            <v-icon>remove_circle</v-icon>
+          </v-btn>
+          <v-btn icon @click="tooglePopUp($event, true)" class="green--text">
+            <v-icon>add_circle</v-icon>
+          </v-btn>
+        </div>
       </v-card-title>
-      <v-container class="doughnut-size">
+      <v-container>
         <ChartContainer>
-          <Doughnut />
+          <Doughnut :actives="actives" />
         </ChartContainer>
       </v-container>
       <v-list>
@@ -27,7 +24,7 @@
         </div>
       </v-list>
     </v-card>
-    <AddActiveDialog v-model="popup" />
+    <AddActiveDialog v-model="popup.isVisible" :isBuying="popup.isBuying" />
     <!-- <v-btn color="amber darken-4" dark @click="popup = true">Editar carteira</v-btn> -->
   </v-container>
   <!--     <v-btn fab bottom right fixed class="blue on-top" @click="tooglePopUp">
@@ -41,7 +38,8 @@ import Doughnut from "@/components/charts/Doughnut.js";
 import ChartContainer from "@/components/charts/ChartContainer";
 import OnWalletActive from "@/components/OnWalletActive";
 import COLORS from "@/components/charts/colors.js";
-import firestore from "@/firestore.js";
+//import firestore from "@/firestore.js";
+import ActiveModel from "../indexedDB/ActiveModel.js";
 
 export default {
   name: "Home",
@@ -52,7 +50,11 @@ export default {
     OnWalletActive
   },
   data: () => ({
-    popup: false
+    popup: {
+      isVisible: false,
+      isBuying: null
+    },
+    actives: []
   }),
   computed: {
     colors() {
@@ -60,12 +62,16 @@ export default {
     }
   },
   async created() {
-    const req = await firestore.collection("actives").get();
-    console.log(req.docs[0].data());
+    //const req = await firestore.collection("actives").get();
+    //req.docs.forEach(doc => console.log(doc.data()));
+    this.actives = await ActiveModel.getAll();
   },
   methods: {
-    tooglePopUp() {
-      this.popup = !this.popup;
+    tooglePopUp(_, isBuying) {
+      this.popup = {
+        isVisible: !this.popup.isVisibile,
+        isBuying
+      };
     }
   }
 };

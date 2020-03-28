@@ -8,8 +8,7 @@ export default {
       if (DB) return resolve(DB);
       let request = window.indexedDB.open(DB_NAME, DB_VERSION);
 
-      request.onerror = e => {
-        console.log("Error opening DB", e);
+      request.onerror = () => {
         reject("Error");
       };
 
@@ -20,7 +19,12 @@ export default {
 
       request.onupgradeneeded = e => {
         let db = e.target.result;
-        db.createObjectStore("stocks", { keyPath: "paper" });
+        if (e.oldVersion < 1) {
+          db.createObjectStore("stocks", {
+            keyPath: "key",
+            autoIncrement: true
+          });
+        }
       };
     });
   }

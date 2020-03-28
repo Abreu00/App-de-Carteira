@@ -11,9 +11,9 @@
           <v-text-field solo v-model="active.ticker" label="Ticker" max-width="20"></v-text-field>
         </v-col>
         <v-col cols="2">
-          <v-radio-group class="my-0" :mandatory="true">
-            <v-radio label="Ação" value="Ação" />
-            <v-radio label="FII" value="FII" />
+          <v-radio-group class="my-0" :mandatory="true" v-model="active.type">
+            <v-radio label="Ação" value="stock" />
+            <v-radio label="FII" value="fii" />
           </v-radio-group>
         </v-col>
         <v-col cols="4">
@@ -37,6 +37,8 @@
   </v-container>
 </template>
 <script>
+import ActiveModel from "../indexedDB/ActiveModel.js";
+
 export default {
   name: "EditWallet",
   components: {},
@@ -44,7 +46,8 @@ export default {
     actives: [
       {
         ticker: "",
-        percentage: 0
+        percentage: 0,
+        type: "stock"
       }
     ]
   }),
@@ -52,13 +55,16 @@ export default {
     handleNewLine() {
       this.actives.push({
         ticker: "",
-        percentage: 0
+        percentage: 0,
+        type: "stock"
       });
     },
     handleSave() {
-      this.actives.forEach(active => {
-        console.log(`${active.ticker} - ${active.percentage}%`);
-      });
+      this.actives.map(
+        active =>
+          active.ticker &&
+          ActiveModel.add(active.ticker, active.type, active.percentage)
+      );
     }
   },
   computed: {

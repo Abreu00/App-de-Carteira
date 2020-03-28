@@ -11,12 +11,16 @@
 <script>
 import Header from "./components/Header";
 import Nav from "./components/Nav";
+import idb from "./indexedDB/idb";
 
 export default {
   name: "App",
   components: {
     Header,
     Nav
+  },
+  created() {
+    idb.getDB();
   }
 };
 </script>

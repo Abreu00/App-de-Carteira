@@ -1,12 +1,23 @@
 <template>
-  <v-app-bar app absolute class="blue darken-3" dark dense>
+  <v-app-bar app absolute class="transparent" :elevation="0">
     <v-toolbar-title>
-      Minha carteira
-      <v-icon>pie_chart</v-icon>
+      FreakProof
+      <v-icon class="ml-1 mb-1 green--text">local_atm</v-icon>
     </v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn icon @click="handleClick">
+      <v-icon>help_outline</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Header",
+  methods: {
+    handleClick() {
+      console.log("click");
+    }
+  }
+};
 </script>
