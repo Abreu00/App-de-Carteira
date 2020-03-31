@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import CurrentAssets from "../views/CurrentAssets";
 import Goals from "../views/Goals";
 import Consolidada from "../views/Consolidada";
-import CreateWallet from "../views/CreateWallet";
+import CreateWallet from "../views/CreateWallet/";
 
 Vue.use(VueRouter);
 

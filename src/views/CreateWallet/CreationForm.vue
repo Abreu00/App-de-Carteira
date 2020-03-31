@@ -1,22 +1,18 @@
 <template>
-  <v-container v-if="isCreating" class="pa-0">
+  <v-container class="px-2">
     <v-card class="pb-4" raised shaped>
-      <v-card-title class="px-3 text-uppercase">
+      <v-card-title class="px-3">
         <span>Criar Carteira</span>
       </v-card-title>
 
-      <v-row
-        v-for="(active, index) in actives"
-        :key="index"
-        justify="space-between"
-        class="px-3"
-      >
+      <v-row v-for="(active, index) in actives" :key="index" justify="space-between" class="px-3">
         <v-col cols="4" align-self="center">
           <v-text-field
             solo
             v-model="active.ticker"
             label="Ticker"
             max-width="20"
+            class="upper-input"
           ></v-text-field>
         </v-col>
         <v-col cols="2">
@@ -35,42 +31,42 @@
           />
         </v-col>
       </v-row>
-      <span class="d-block text-right subtitle-1 font-weight-bold mx-4"
-        >Alocado - {{ total }}%</span
-      >
+
+      <span class="d-block text-right subtitle-1 font-weight-bold mx-4">Alocado - {{ total }}%</span>
       <v-card-actions class="justify-space-between mx-4 mt-2">
-        <v-btn text color="red" @click="handleCancel">Cancelar</v-btn>
+        <v-btn text color="red" @click="onCancel">Cancelar</v-btn>
         <v-btn text color="blue darken2" @click="handleSave">Salvar</v-btn>
         <v-btn icon color="blue darken2" @click="handleNewLine">
           <v-icon>add</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>
-  </v-container>
-  <v-container v-else fill-height fluid>
-    <v-row justify="center" align="center">
-      <v-col>
-        <p class="title text-center mt-8">
-          Você ainda não criou sua
-          <br />carteira consolidada
-        </p>
-        <div class="text-center">
-          <v-btn color="amber darken-4" dark @click="isCreating = !isCreating"
-            >Criar minha carteira</v-btn
-          >
-        </div>
-      </v-col>
-    </v-row>
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="3000"
+      multi-line
+      top
+      class="blue--text text--lighten-3"
+    >
+      <span>Alocação deve ser de 100%</span>
+      <v-btn text @click="snackbar = false" color="blue lighten-3">fechar</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
+
 <script>
-import ActiveModel from "../indexedDB/ActiveModel.js";
+import ActiveModel from "../../indexedDB/ActiveModel";
 
 export default {
-  name: "CreateWallet",
-  components: {},
+  name: "CreationForm",
+  props: {
+    onCancel: {
+      type: Function,
+      required: true
+    }
+  },
   data: () => ({
-    isCreating: false,
+    snackbar: false,
     actives: [
       {
         ticker: "",
@@ -89,9 +85,6 @@ export default {
       }
     ]
   }),
-  created() {
-    this.$store.commit("toogleBottomNav");
-  },
   methods: {
     handleNewLine() {
       this.actives.push({
@@ -101,23 +94,26 @@ export default {
       });
     },
     handleSave() {
+      if (this.total !== 100) {
+        return (this.snackbar = true);
+      }
       this.actives.map(
         active =>
           active.ticker &&
+          active.percentage > 0 &&
           ActiveModel.add(active.ticker, active.type, active.percentage)
       );
       this.$store.commit("toogleBottomNav");
       this.$router.replace("/consolidada");
-    },
-    handleCancel() {
-      this.isCreating = false;
     }
   },
   computed: {
     total() {
       let sum = 0;
       this.actives.forEach(active => {
-        sum += active.percentage;
+        if (active.ticker) {
+          sum += active.percentage;
+        }
       });
       return sum;
     }
@@ -125,8 +121,8 @@ export default {
 };
 </script>
 
-<style scoped>
-.v-text-field__slot input {
+<style>
+.upper-input input {
   text-transform: uppercase;
 }
 </style>
