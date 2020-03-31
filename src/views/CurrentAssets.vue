@@ -4,7 +4,11 @@
       <v-card-title class="justify-space-between">
         <span>Carteira Atual</span>
         <div>
-          <v-btn icon @click="tooglePopUp($event, false)" class="red--text mr-1">
+          <v-btn
+            icon
+            @click="tooglePopUp($event, false)"
+            class="red--text mr-1"
+          >
             <v-icon>remove_circle</v-icon>
           </v-btn>
           <v-btn icon @click="tooglePopUp($event, true)" class="green--text">
@@ -66,6 +70,9 @@ export default {
   },
   async created() {
     this.actives = await ActiveModel.getAll();
+    if (this.actives.length === 0) {
+      this.$router.replace("/createwallet");
+    }
   },
   methods: {
     tooglePopUp(_, isBuying) {

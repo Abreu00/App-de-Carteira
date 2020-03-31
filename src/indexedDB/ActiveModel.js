@@ -2,7 +2,7 @@ import idb from "./idb";
 
 export default {
   async add(ticker, type, desiredPctg, quotes = 0) {
-    let db = await idb.getDB();
+    const db = await idb.getDB();
 
     return new Promise(resolve => {
       let transaction = db.transaction(["stocks"], "readwrite");
@@ -15,7 +15,7 @@ export default {
     });
   },
   async getAll() {
-    let db = await idb.getDB();
+    const db = await idb.getDB();
 
     return new Promise(resolve => {
       let transaction = db.transaction(["stocks"], "readonly");
@@ -36,7 +36,7 @@ export default {
     });
   },
   async update() {
-    let db = await idb.getDB();
+    const db = await idb.getDB();
     return new Promise(resolve => {
       let transaction = db.transaction(["stocks"], "readwrite");
       let objectStore = transaction.objectStore("stocks");
@@ -50,7 +50,7 @@ export default {
     });
   },
   async len() {
-    let db = await idb.getDB();
+    const db = await idb.getDB();
     return new Promise(resolve => {
       let transaction = db.transaction(["stocks"], "readonly");
       let objectStore = transaction.objectStore("stocks");
@@ -60,6 +60,15 @@ export default {
       };
       let request = objectStore.count();
       request.onsuccess = event => (len = event.target.result);
+    });
+  },
+  async clear() {
+    const db = await idb.getDB();
+    return new Promise(resolve => {
+      let transaction = db.transaction(["stocks"], "readwrite");
+      let objectStore = transaction.objectStore("stocks");
+      transaction.oncomplete = () => resolve();
+      objectStore.clear();
     });
   }
 };

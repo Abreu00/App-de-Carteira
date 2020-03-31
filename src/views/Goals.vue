@@ -4,7 +4,7 @@
       v-for="(active, index) in actives"
       :key="index"
       :ticker="active.ticker"
-      :difference="index % 2 === 0 ? 100: -100"
+      :difference="index % 2 === 0 ? 100 : -100"
       :quotes="active.quotes"
       @click.native="activeClick($event, active.ticker)"
     />
@@ -31,6 +31,9 @@ export default {
   }),
   async created() {
     this.actives = await ActiveModel.getAll();
+    if (this.actives.length === 0) {
+      this.$router.replace("/createwallet");
+    }
   },
   methods: {
     activeClick(_, ticker) {

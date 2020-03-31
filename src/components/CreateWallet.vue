@@ -5,9 +5,19 @@
         <span>Criar Carteira</span>
       </v-card-title>
 
-      <v-row v-for="(active, index) in actives" :key="index" justify="space-between" class="px-3">
+      <v-row
+        v-for="(active, index) in actives"
+        :key="index"
+        justify="space-between"
+        class="px-3"
+      >
         <v-col cols="4" align-self="center">
-          <v-text-field solo v-model="active.ticker" label="Ticker" max-width="20"></v-text-field>
+          <v-text-field
+            solo
+            v-model="active.ticker"
+            label="Ticker"
+            max-width="20"
+          ></v-text-field>
         </v-col>
         <v-col cols="2">
           <v-radio-group class="my-0" :mandatory="true" v-model="active.type">
@@ -25,9 +35,11 @@
           />
         </v-col>
       </v-row>
-      <span class="d-block text-right subtitle-1 font-weight-bold mx-4">Alocado - {{total}}%</span>
+      <span class="d-block text-right subtitle-1 font-weight-bold mx-4"
+        >Alocado - {{ total }}%</span
+      >
       <v-card-actions class="justify-space-between mx-4 mt-2">
-        <v-btn text color="red">Cancelar</v-btn>
+        <v-btn text color="red" @click="onCancel">Cancelar</v-btn>
         <v-btn text color="blue darken2" @click="handleSave">Salvar</v-btn>
         <v-btn icon color="blue darken2" @click="handleNewLine">
           <v-icon>add</v-icon>
@@ -42,6 +54,16 @@ import ActiveModel from "../indexedDB/ActiveModel.js";
 export default {
   name: "EditWallet",
   components: {},
+  props: {
+    onSave: {
+      type: Function,
+      required: true
+    },
+    onCancel: {
+      type: Function,
+      required: true
+    }
+  },
   data: () => ({
     actives: [
       {
@@ -75,6 +97,7 @@ export default {
           active.ticker &&
           ActiveModel.add(active.ticker, active.type, active.percentage)
       );
+      this.onSave();
     }
   },
   computed: {
