@@ -35,6 +35,20 @@ export default {
       };
     });
   },
+  async update() {
+    let db = await idb.getDB();
+    return new Promise(resolve => {
+      let transaction = db.transaction(["stocks"], "readwrite");
+      let objectStore = transaction.objectStore("stocks");
+      transaction.oncomplete = () => resolve();
+
+      let request = objectStore.put({
+        ticker: "ABEV3",
+        quotes: 20
+      });
+      request.onsuccess = event => console.log(event.target);
+    });
+  },
   async len() {
     let db = await idb.getDB();
     return new Promise(resolve => {

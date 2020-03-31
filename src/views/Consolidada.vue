@@ -21,7 +21,7 @@
         <v-card-title class="justify-space-between">
           Carteira Consolidada
           <v-menu :offset-y="true">
-            <template v-slot:activator="{on}">
+            <template v-slot:activator="{ on }">
               <v-btn icon v-on="on">
                 <v-icon>more_vert</v-icon>
               </v-btn>
@@ -32,10 +32,24 @@
             </v-list>
           </v-menu>
         </v-card-title>
-        <v-container>
-          <ChartContainer>
-            <Doughnut :actives="$store.state.actives" />
-          </ChartContainer>
+        <v-container class="px-2">
+          <v-row align="center">
+            <v-col cols="6">
+              <div class="limit">
+                <ChartContainer>
+                  <Doughnut :actives="actives" />
+                </ChartContainer>
+              </div>
+            </v-col>
+            <v-col cols="6">
+              <div v-for="(active, index) in actives" :key="index">
+                <p v-if="index < 10" class="pa-0 mb-1">
+                  {{ active.ticker }}
+                  <span class="pl-2">KNRI11</span>
+                </p>
+              </div>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card>
     </div>
@@ -46,6 +60,7 @@
 import EditWallet from "@/components/EditWallet";
 import Doughnut from "@/components/charts/Doughnut.js";
 import ChartContainer from "@/components/charts/ChartContainer";
+import ActiveModel from "../indexedDB/ActiveModel";
 
 export default {
   name: "TabCarteiraConsolidada",
@@ -60,14 +75,22 @@ export default {
     ChartContainer
   },
   async created() {
-    this.exists = this.$store.state.actives.length > 0;
+    this.actives = await ActiveModel.getAll();
+    this.exists = this.actives.length > 0;
   },
   methods: {
     cleanWallet() {
       // Toogle popup de confimação
-      console.log("limpa");
+      //console.log("limpa");
     }
   }
 };
 </script>
-
+<style scoped>
+@media (max-width: 900px) {
+  .limit {
+    max-height: 15vh;
+    height: 15vh;
+  }
+}
+</style>

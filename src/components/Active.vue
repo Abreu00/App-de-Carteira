@@ -10,8 +10,14 @@
   >
     <v-container class="d-flex justify-space-between py-1 px-2" fill-height>
       <p class="mb-0 font-weight-bold title">R${{ valueIndicator }}</p>
-      <p class="font-weight-bold text-center mb-0 text-uppercase display-1 force-center">{{ticker}}</p>
-      <p class="font-weight-bold text-right align-self-start mb-0 subtitle-2">{{quotes}}</p>
+      <p
+        class="font-weight-bold text-center mb-0 text-uppercase display-1 force-center"
+      >
+        {{ ticker }}
+      </p>
+      <p class="font-weight-bold text-right align-self-start mb-0 subtitle-2">
+        {{ quotes }}
+      </p>
     </v-container>
   </v-card>
 </template>

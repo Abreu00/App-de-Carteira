@@ -14,13 +14,17 @@
       </v-card-title>
       <v-container>
         <ChartContainer>
-          <Doughnut :actives="$store.state.actives" />
+          <Doughnut :actives="actives" />
         </ChartContainer>
       </v-container>
       <v-list>
-        <div v-for="(active, index) in $store.state.actives" :key="index">
+        <div v-for="(active, index) in actives" :key="index">
           <v-divider class="blue lighten-3" />
-          <OnWalletActive :ticker="active.ticker" :vuetifyColor="colors[index]" />
+          <OnWalletActive
+            :ticker="active.ticker"
+            :vuetifyColor="colors[index]"
+            :desiredPctg="active.desiredPctg"
+          />
         </div>
       </v-list>
     </v-card>
@@ -38,7 +42,7 @@ import Doughnut from "@/components/charts/Doughnut.js";
 import ChartContainer from "@/components/charts/ChartContainer";
 import OnWalletActive from "@/components/OnWalletActive";
 import COLORS from "@/components/charts/colors.js";
-//import firestore from "@/firestore.js";
+import ActiveModel from "../indexedDB/ActiveModel";
 
 export default {
   name: "Home",
@@ -52,12 +56,16 @@ export default {
     popup: {
       isVisible: false,
       isBuying: null
-    }
+    },
+    actives: []
   }),
   computed: {
     colors() {
       return COLORS.map(color => color.vuetify);
     }
+  },
+  async created() {
+    this.actives = await ActiveModel.getAll();
   },
   methods: {
     tooglePopUp(_, isBuying) {

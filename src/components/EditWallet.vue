@@ -1,9 +1,8 @@
 <template>
   <v-container class="pa-0">
     <v-card class="pb-4" raised shaped>
-      <v-card-title class="justify-space-between px-3">
+      <v-card-title class="px-3 text-uppercase">
         <span>Criar Carteira</span>
-        <span>Alocado - {{total}}%</span>
       </v-card-title>
 
       <v-row v-for="(active, index) in actives" :key="index" justify="space-between" class="px-3">
@@ -26,7 +25,8 @@
           />
         </v-col>
       </v-row>
-      <v-card-actions class="justify-space-between mx-4">
+      <span class="d-block text-right subtitle-1 font-weight-bold mx-4">Alocado - {{total}}%</span>
+      <v-card-actions class="justify-space-between mx-4 mt-2">
         <v-btn text color="red">Cancelar</v-btn>
         <v-btn text color="blue darken2" @click="handleSave">Salvar</v-btn>
         <v-btn icon color="blue darken2" @click="handleNewLine">
@@ -44,6 +44,16 @@ export default {
   components: {},
   data: () => ({
     actives: [
+      {
+        ticker: "",
+        percentage: 0,
+        type: "stock"
+      },
+      {
+        ticker: "",
+        percentage: 0,
+        type: "stock"
+      },
       {
         ticker: "",
         percentage: 0,
@@ -78,3 +88,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.v-text-field__slot input {
+  text-transform: uppercase;
+}
+</style>
