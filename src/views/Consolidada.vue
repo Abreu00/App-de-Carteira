@@ -47,19 +47,10 @@ import COLORS from "@/components/charts/colors.js";
 
 export default {
   name: "Consolidada",
-  data: () => ({
-    actives: []
-  }),
+  data: () => ({}),
   components: {
     Doughnut,
     ChartContainer
-  },
-  async created() {
-    this.actives = await ActiveModel.getAll();
-    if (this.actives.length === 0) {
-      this.$router.replace("/createwallet");
-    }
-    console.log(this.actives);
   },
   methods: {
     cleanWallet() {
@@ -69,6 +60,9 @@ export default {
     }
   },
   computed: {
+    actives() {
+      return this.$store.state.activeList;
+    },
     activesFirstHalf() {
       const len = this.actives.length;
       return this.actives.slice(0, len / 2 + (len % 2));

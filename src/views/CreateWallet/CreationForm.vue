@@ -23,9 +23,9 @@
         </v-col>
         <v-col cols="4">
           <v-slider
-            v-model="active.percentage"
+            v-model="active.desiredPctg"
             max="20"
-            :hint="active.percentage.toString()"
+            :hint="active.desiredPctg.toString()"
             label="%"
             persistent-hint
           />
@@ -57,6 +57,13 @@
 <script>
 import ActiveModel from "../../indexedDB/ActiveModel";
 
+const defaultActive = {
+  ticker: "",
+  desiredPctg: 0,
+  type: "stock",
+  quotes: 0
+};
+
 export default {
   name: "CreationForm",
   props: {
@@ -67,31 +74,13 @@ export default {
   },
   data: () => ({
     snackbar: false,
-    actives: [
-      {
-        ticker: "",
-        percentage: 0,
-        type: "stock"
-      },
-      {
-        ticker: "",
-        percentage: 0,
-        type: "stock"
-      },
-      {
-        ticker: "",
-        percentage: 0,
-        type: "stock"
-      }
-    ]
+    actives: Array.from({ length: 3 }, () => ({
+      ...defaultActive
+    }))
   }),
   methods: {
     handleNewLine() {
-      this.actives.push({
-        ticker: "",
-        percentage: 0,
-        type: "stock"
-      });
+      this.actives.push({ ...defaultActive });
     },
     handleSave() {
       if (this.total !== 100) {
@@ -100,9 +89,10 @@ export default {
       this.actives.map(
         active =>
           active.ticker &&
-          active.percentage > 0 &&
-          ActiveModel.add(active.ticker, active.type, active.percentage)
+          active.desiredPctg > 0 &&
+          ActiveModel.add(active.ticker, active.type, active.desiredPctg)
       );
+      this.$store.commit("setActiveList", this.actives);
       this.$store.commit("toogleBottomNav");
       this.$router.replace("/consolidada");
     }
@@ -112,7 +102,7 @@ export default {
       let sum = 0;
       this.actives.forEach(active => {
         if (active.ticker) {
-          sum += active.percentage;
+          sum += active.desiredPctg;
         }
       });
       return sum;

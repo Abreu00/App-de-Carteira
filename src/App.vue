@@ -20,7 +20,13 @@ export default {
     Header,
     Nav
   },
-  created() {
+  async created() {
+    const actives = await ActiveModel.getAll();
+    this.$store.commit("setActiveList", actives);
+    const currPath = this.$router.currentRoute.path;
+    if (actives.length === 0 && currPath !== "/createwallet") {
+      this.$router.replace("/createwallet");
+    }
     //this.syncLocalActives();
     //this.syncRemoteActives();
   },

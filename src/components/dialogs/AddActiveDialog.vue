@@ -17,7 +17,7 @@
         ></v-text-field>
         <v-row justify="end" class="mt-4">
           <v-btn text color="red" @click="close">Cancelar</v-btn>
-          <v-btn class="mr-4" text color="blue darken-2" @click="handleTransaction">Adicionar</v-btn>
+          <v-btn class="mr-4" text color="blue darken-2" @click="handleTransaction">Concluir</v-btn>
         </v-row>
       </v-container>
     </v-card>
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import ActiveModel from "../../indexedDB/ActiveModel";
 export default {
   name: "AddActiveDialog",
   props: {
@@ -62,12 +61,13 @@ export default {
       if (!this.numberOfPapers || !ticker) {
         return;
       }
-      const newQuotes = this.isBuying
-        ? Number(this.numberOfPapers)
-        : -Number(this.numberOfPapers);
-      const { quotes } = await ActiveModel.get(ticker);
-      ActiveModel.update(ticker, "quotes", quotes + newQuotes);
-
+      const transactionQuotes = this.isBuying
+        ? parseInt(this.numberOfPapers)
+        : -parseInt(this.numberOfPapers);
+      this.$store.commit("activeTransaction", {
+        ticker,
+        transactionQuotes
+      });
       this.close();
     },
     integerRule(value) {

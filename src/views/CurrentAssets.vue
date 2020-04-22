@@ -38,7 +38,6 @@ import Doughnut from "@/components/charts/Doughnut.js";
 import ChartContainer from "@/components/charts/ChartContainer";
 import OnWalletActive from "@/components/OnWalletActive";
 import COLORS from "@/components/charts/colors.js";
-import ActiveModel from "../indexedDB/ActiveModel";
 
 export default {
   name: "Home",
@@ -52,10 +51,12 @@ export default {
     popup: {
       isVisible: false,
       isBuying: null
-    },
-    actives: []
+    }
   }),
   computed: {
+    actives() {
+      return this.$store.state.activeList;
+    },
     colors() {
       return COLORS.map(color => color.vuetify);
     },
@@ -63,12 +64,7 @@ export default {
       return this.actives.map(active => active.ticker);
     }
   },
-  async created() {
-    this.actives = await ActiveModel.getAll();
-    if (this.actives.length === 0) {
-      this.$router.replace("/createwallet");
-    }
-  },
+  async created() {},
   methods: {
     tooglePopUp(_, isBuying) {
       this.popup = {
