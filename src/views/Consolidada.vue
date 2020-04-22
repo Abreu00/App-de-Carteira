@@ -56,6 +56,7 @@ export default {
     cleanWallet() {
       // Toogle popup de confimação
       ActiveModel.clear();
+      this.$store.commit("clearActiveList");
       this.$router.replace("/createwallet");
     }
   },

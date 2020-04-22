@@ -4,7 +4,7 @@
       v-for="(active, index) in $store.state.activeList"
       :key="index"
       :ticker="active.ticker"
-      :difference="index % 2 === 0 ? 100 : -100"
+      :difference="calc(active)"
       :quotes="active.quotes"
       @click.native="activeClick($event, active.ticker)"
     />
@@ -27,13 +27,18 @@ export default {
       ticker: ""
     }
   }),
-  async created() {},
   methods: {
     activeClick(_, ticker) {
       this.popup = {
         isVisible: true,
         ticker
       };
+    },
+    calc(active) {
+      const balance = this.$store.state.balance;
+      const targetValue = (balance * active.desiredPctg) / 100;
+      const realValue = active.price * active.quotes;
+      return (targetValue - realValue).toFixed(2);
     }
   }
 };

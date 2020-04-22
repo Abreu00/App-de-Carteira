@@ -25,12 +25,18 @@ export default {
     this.$store.commit("setActiveList", actives);
     const currPath = this.$router.currentRoute.path;
     if (actives.length === 0 && currPath !== "/createwallet") {
-      this.$router.replace("/createwallet");
+      return this.$router.replace("/createwallet");
     }
+    this.$store.commit("updateBalance");
+    //this.updatePrices();
     //this.syncLocalActives();
     //this.syncRemoteActives();
   },
   methods: {
+    async updatePrices() {
+      const response = await api.get();
+      this.$store.commit("updatePrices", response.data);
+    },
     async syncLocalActives() {
       const actives = await ActiveModel.getAll();
       this.$store.commit("setActives", actives);

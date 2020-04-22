@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     isNavEnabled: true,
     activeList: [],
+    balance: 0,
   },
   mutations: {
     toogleBottomNav(state) {
@@ -23,6 +24,31 @@ export default new Vuex.Store({
       const newQuotesValue = active.quotes + transactionQuotes;
       active.quotes = newQuotesValue;
       ActiveModel.update(ticker, "quotes", newQuotesValue);
+    },
+    updateBalance(state) {
+      const { activeList } = state;
+      state.balance = activeList.reduce((balance, active) => {
+        return balance + active.quotes * active.price;
+      }, 0);
+    },
+    updatePrices(state, priceList) {
+      // Updates local app and db prices based on
+      // remote api prices, and also calculate current
+      // user balance based on those prices
+      const { activeList } = state;
+      let balance = 0;
+      activeList.forEach((active) => {
+        const { price } = priceList.find(
+          (ApiActive) => ApiActive.ticker === active.ticker
+        );
+        active.price = price;
+        ActiveModel.update(active.ticker, "price", price);
+        balance += price * active.quotes;
+      });
+      state.balance = balance;
+    },
+    clearActiveList(state) {
+      state.activeList = [];
     },
   },
   actions: {},

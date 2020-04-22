@@ -3,6 +3,7 @@ import idb from "./idb";
 export default {
   async add(ticker, type, desiredPctg, quotes = 0) {
     const db = await idb.getDB();
+    const price = 0;
 
     return new Promise((resolve) => {
       let transaction = db.transaction(["stocks"], "readwrite");
@@ -11,7 +12,7 @@ export default {
       };
 
       let store = transaction.objectStore("stocks");
-      store.put({ ticker, type, desiredPctg, quotes });
+      store.put({ ticker, type, desiredPctg, quotes, price });
     });
   },
   async getAll() {

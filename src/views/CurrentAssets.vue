@@ -24,6 +24,7 @@
             :ticker="active.ticker"
             :vuetifyColor="colors[index]"
             :desiredPctg="active.desiredPctg"
+            :currentPctg="getRealPercentage(active)"
           />
         </div>
       </v-list>
@@ -54,6 +55,9 @@ export default {
     }
   }),
   computed: {
+    balance() {
+      return this.$store.state.balance;
+    },
     actives() {
       return this.$store.state.activeList;
     },
@@ -71,6 +75,9 @@ export default {
         isVisible: !this.popup.isVisibile,
         isBuying
       };
+    },
+    getRealPercentage(active) {
+      return (((active.price * active.quotes) / this.balance) * 100).toFixed(2);
     }
   }
 };

@@ -8,7 +8,7 @@
       <v-container>
         <v-row justify="space-between">
           <p class="pa-0 mr-0">Peso atual</p>
-          <p>20%</p>
+          <p>{{ currentPctg }}%</p>
         </v-row>
         <v-row justify="space-between">
           <p class="pa-0 mr-0">Peso desejado</p>
@@ -32,6 +32,10 @@ export default {
       required: true
     },
     desiredPctg: {
+      type: Number,
+      required: true
+    },
+    currentPctg: {
       type: Number,
       required: true
     }
