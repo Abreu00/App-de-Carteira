@@ -4,7 +4,7 @@ export default {
   async add(ticker, type, desiredPctg, quotes = 0) {
     const db = await idb.getDB();
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let transaction = db.transaction(["stocks"], "readwrite");
       transaction.oncomplete = () => {
         resolve();
@@ -17,7 +17,7 @@ export default {
   async getAll() {
     const db = await idb.getDB();
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let transaction = db.transaction(["stocks"], "readonly");
       transaction.oncomplete = () => {
         resolve(cats);
@@ -26,7 +26,7 @@ export default {
       let store = transaction.objectStore("stocks");
       let cats = [];
 
-      store.openCursor().onsuccess = e => {
+      store.openCursor().onsuccess = (e) => {
         let cursor = e.target.result;
         if (cursor) {
           cats.push(cursor.value);
@@ -35,23 +35,40 @@ export default {
       };
     });
   },
-  async update() {
+  async get(ticker) {
     const db = await idb.getDB();
-    return new Promise(resolve => {
+
+    return new Promise((resolve) => {
+      const transaction = db.transaction(["stocks"], "readonly");
+      const objectStore = transaction.objectStore("stocks");
+      let active;
+      transaction.oncomplete = () => resolve(active);
+
+      const request = objectStore.get(ticker);
+      request.onsuccess = (event) => {
+        active = event.target.result;
+      };
+    });
+  },
+  async update(ticker, property, value) {
+    const oldActive = await this.get(ticker);
+    const db = await idb.getDB();
+    return new Promise((resolve) => {
       let transaction = db.transaction(["stocks"], "readwrite");
       let objectStore = transaction.objectStore("stocks");
-      transaction.oncomplete = () => resolve();
+      let result;
+      transaction.oncomplete = () => resolve(result);
 
       let request = objectStore.put({
-        ticker: "ABEV3",
-        quotes: 20
+        ...oldActive,
+        [property]: value,
       });
-      request.onsuccess = event => console.log(event.target);
+      request.onsuccess = (event) => (result = event.target.result);
     });
   },
   async len() {
     const db = await idb.getDB();
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let transaction = db.transaction(["stocks"], "readonly");
       let objectStore = transaction.objectStore("stocks");
       let len;
@@ -59,16 +76,16 @@ export default {
         resolve(len);
       };
       let request = objectStore.count();
-      request.onsuccess = event => (len = event.target.result);
+      request.onsuccess = (event) => (len = event.target.result);
     });
   },
   async clear() {
     const db = await idb.getDB();
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let transaction = db.transaction(["stocks"], "readwrite");
       let objectStore = transaction.objectStore("stocks");
       transaction.oncomplete = () => resolve();
       objectStore.clear();
     });
-  }
+  },
 };

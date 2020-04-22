@@ -8,11 +8,16 @@
       </v-card-title>
       <v-container class="py-0 px-2">
         <v-text-field v-if="defaultTicker" label="Ticker" :value="defaultTicker" disabled />
-        <v-autocomplete v-else :items="options" label="Ticker" />
-        <v-text-field required v-model="numberOfPapers" label="Número de cotas" type="number"></v-text-field>
+        <v-autocomplete v-else :items="options" label="Ticker" v-model="paperName" />
+        <v-text-field
+          :rules="[requiredRule, positiveRule, integerRule]"
+          v-model="numberOfPapers"
+          label="Número de cotas"
+          type="number"
+        ></v-text-field>
         <v-row justify="end" class="mt-4">
           <v-btn text color="red" @click="close">Cancelar</v-btn>
-          <v-btn class="mr-4" text color="blue darken-2" @click="handleNewActive">Adicionar</v-btn>
+          <v-btn class="mr-4" text color="blue darken-2" @click="handleTransaction">Adicionar</v-btn>
         </v-row>
       </v-container>
     </v-card>
@@ -20,6 +25,7 @@
 </template>
 
 <script>
+import ActiveModel from "../../indexedDB/ActiveModel";
 export default {
   name: "AddActiveDialog",
   props: {
@@ -32,23 +38,47 @@ export default {
     defaultTicker: {
       type: String,
       required: false,
-      default: null
+      default: ""
+    },
+    options: {
+      type: Array,
+      required: false
     }
   },
   data: () => ({
     typeOfActive: "",
     paperName: "",
-    numberOfPapers: "",
-    options: ["ABEV3", "WEGE3", "ENGIE3"]
+    numberOfPapers: ""
   }),
   methods: {
     close() {
       this.paperName = "";
-      this.numberOfPapers = "";
+      this.numberOfPapers = 0;
       this.typeOfActive = "";
       this.visible = false;
     },
-    handleNewActive() {}
+    async handleTransaction() {
+      const ticker = this.defaultTicker || this.paperName;
+      if (!this.numberOfPapers || !ticker) {
+        return;
+      }
+      const newQuotes = this.isBuying
+        ? Number(this.numberOfPapers)
+        : -Number(this.numberOfPapers);
+      const { quotes } = await ActiveModel.get(ticker);
+      ActiveModel.update(ticker, "quotes", quotes + newQuotes);
+
+      this.close();
+    },
+    integerRule(value) {
+      return Number.isInteger(parseFloat(value)) || "Valor deve ser inteiro";
+    },
+    requiredRule(value) {
+      return !!value || "Favor preencher esse campo";
+    },
+    positiveRule(value) {
+      return parseInt(value) > 0 || "Número deve ser positivo";
+    }
   },
   computed: {
     visible: {

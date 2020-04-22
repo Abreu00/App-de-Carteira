@@ -15,20 +15,22 @@
         </v-menu>
       </v-card-title>
       <v-container class="px-2">
-        <v-row align="center">
-          <v-col cols="6">
+        <v-row align="start" justify="space-between">
+          <v-col xl="10" lg="10" md="8" sm="8" xs="6" cols="6">
             <div class="limit">
               <ChartContainer>
                 <Doughnut :actives="actives" />
               </ChartContainer>
             </div>
           </v-col>
-          <v-col cols="6">
-            <div v-for="(active, index) in actives" :key="index">
-              <p v-if="index < 10" class="pa-0 mb-1">
-                {{ active.ticker }}
-                <span class="pl-2">KNRI11</span>
-              </p>
+          <v-col xl="2" lg="2" md="2" sm="2" xs="6">
+            <div v-for="(active, index) in actives" :key="index" class="nowrap">
+              <v-badge :color="colors[index]" dot offset-y="0" offset-x="14" />
+              <span class="pa-0 mb-1 caption">{{ `${active.ticker} ${active.desiredPctg}%` }}</span>
+            </div>
+            <div v-for="(active, index) in actives" :key="index + 20" class="nowrap">
+              <v-badge :color="colors[index]" dot offset-y="0" offset-x="14" />
+              <span class="pa-0 mb-1 caption">{{ `${active.ticker} ${active.desiredPctg}%` }}</span>
             </div>
           </v-col>
         </v-row>
@@ -41,9 +43,10 @@
 import Doughnut from "@/components/charts/Doughnut.js";
 import ChartContainer from "@/components/charts/ChartContainer";
 import ActiveModel from "../indexedDB/ActiveModel";
+import COLORS from "@/components/charts/colors.js";
 
 export default {
-  name: "TabCarteiraConsolidada",
+  name: "Consolidada",
   data: () => ({
     actives: []
   }),
@@ -56,6 +59,7 @@ export default {
     if (this.actives.length === 0) {
       this.$router.replace("/createwallet");
     }
+    console.log(this.actives);
   },
   methods: {
     cleanWallet() {
@@ -63,14 +67,28 @@ export default {
       ActiveModel.clear();
       this.$router.replace("/createwallet");
     }
+  },
+  computed: {
+    activesFirstHalf() {
+      const len = this.actives.length;
+      return this.actives.slice(0, len / 2 + (len % 2));
+    },
+    activesLastHalf() {
+      const len = this.actives.length;
+      return this.actives.slice(Math.ceil(len / 2), len);
+    },
+    lastHalfStartIndex() {
+      const len = this.actives.length;
+      return Math.ceil(len / 2);
+    },
+    colors() {
+      return COLORS.map(color => color.vuetify);
+    }
   }
 };
 </script>
 <style scoped>
-@media (max-width: 900px) {
-  .limit {
-    max-height: 15vh;
-    height: 15vh;
-  }
+.nowrap {
+  white-space: nowrap;
 }
 </style>

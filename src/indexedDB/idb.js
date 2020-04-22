@@ -19,17 +19,9 @@ export default {
 
       request.onupgradeneeded = e => {
         let db = e.target.result;
-        if (e.oldVersion < 1) {
-          db.createObjectStore("stocks", {
-            keyPath: "key",
-            autoIncrement: true
-          });
-        } else if (e.oldVersion < 2) {
-          db.deleteObjectStore("stocks");
-          db.createObjectStore("stocks", {
-            keyPath: "ticker"
-          });
-        }
+        db.createObjectStore("stocks", {
+          keyPath: "ticker"
+        });
       };
     });
   }

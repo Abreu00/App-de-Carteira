@@ -4,11 +4,7 @@
       <v-card-title class="justify-space-between">
         <span>Carteira Atual</span>
         <div>
-          <v-btn
-            icon
-            @click="tooglePopUp($event, false)"
-            class="red--text mr-1"
-          >
+          <v-btn icon @click="tooglePopUp($event, false)" class="red--text mr-1">
             <v-icon>remove_circle</v-icon>
           </v-btn>
           <v-btn icon @click="tooglePopUp($event, true)" class="green--text">
@@ -32,12 +28,8 @@
         </div>
       </v-list>
     </v-card>
-    <AddActiveDialog v-model="popup.isVisible" :isBuying="popup.isBuying" />
-    <!-- <v-btn color="amber darken-4" dark @click="popup = true">Editar carteira</v-btn> -->
+    <AddActiveDialog v-model="popup.isVisible" :isBuying="popup.isBuying" :options="tickers" />
   </v-container>
-  <!--     <v-btn fab bottom right fixed class="blue on-top" @click="tooglePopUp">
-      <v-icon color="grey lighten-4">add</v-icon>
-  </v-btn>-->
 </template>
 
 <script>
@@ -66,6 +58,9 @@ export default {
   computed: {
     colors() {
       return COLORS.map(color => color.vuetify);
+    },
+    tickers() {
+      return this.actives.map(active => active.ticker);
     }
   },
   async created() {

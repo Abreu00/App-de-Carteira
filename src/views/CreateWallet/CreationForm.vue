@@ -46,10 +46,10 @@
       :timeout="3000"
       multi-line
       top
-      class="blue--text text--lighten-3"
+      class="blue--text text--lighten-4"
     >
       <span>Alocação deve ser de 100%</span>
-      <v-btn text @click="snackbar = false" color="blue lighten-3">fechar</v-btn>
+      <v-btn text @click="snackbar = false" color="blue lighten-4">fechar</v-btn>
     </v-snackbar>
   </v-container>
 </template>
