@@ -36,7 +36,7 @@ export default {
       required: true
     },
     currentPctg: {
-      type: Number,
+      type: String,
       required: true
     }
   }

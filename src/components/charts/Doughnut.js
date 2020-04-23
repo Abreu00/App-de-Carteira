@@ -6,39 +6,39 @@ export default {
   props: {
     actives: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data: function() {
     return {
       chartdata: {
-        labels: this.actives.map(active => active.ticker),
+        labels: this.actives.map((active) => active.ticker),
         datasets: [
           {
             label: "Data",
-            backgroundColor: COLORS.map(color => color.hex),
-            data: this.actives.map(active => active.desiredPctg),
-            borderWidth: 0
-          }
-        ]
+            backgroundColor: COLORS.map((color) => color.hex),
+            data: this.actives.map((active) => this.calcRealPctg(active)),
+            borderWidth: 0,
+          },
+        ],
       },
       options: {
         maintainAspectRatio: false,
         cutoutPercentage: 65,
         tooltips: {
-          enabled: true
+          enabled: true,
         },
         legend: {
           display: false,
           position: "top",
-          align: "start"
+          align: "start",
         },
         plugins: {
           datalabels: {
-            color: "transparent"
-          }
-        }
-      }
+            color: "transparent",
+          },
+        },
+      },
     };
   },
   mounted() {
@@ -48,15 +48,22 @@ export default {
     updateData() {
       this.chartdata = {
         ...this.chartdata,
-        labels: this.actives.map(active => active.ticker),
+        labels: this.actives.map((active) => active.ticker),
         datasets: [
           {
             ...this.chartdata.datasets[0],
-            data: this.actives.map(active => active.desiredPctg)
-          }
-        ]
+            data: this.actives.map((active) => this.calcRealPctg(active)),
+          },
+        ],
       };
-    }
+    },
+    calcRealPctg(active) {
+      const { balance } = this.$store.state;
+      const realPctg = Number(
+        (((active.price * active.quotes) / balance) * 100).toFixed(2)
+      );
+      return realPctg;
+    },
   },
   watch: {
     actives: {
@@ -64,7 +71,7 @@ export default {
         this.updateData();
         this.$data._chart.destroy();
         this.renderChart(this.chartdata, this.options);
-      }
-    }
-  }
+      },
+    },
+  },
 };
