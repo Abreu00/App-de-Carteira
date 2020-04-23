@@ -64,13 +64,21 @@ export default {
       );
       return realPctg;
     },
+    refreshChart() {
+      this.updateData();
+      this.$data._chart.destroy();
+      this.renderChart(this.chartdata, this.options);
+    },
+  },
+  computed: {
+    balance() {
+      return this.$store.state.balance;
+    },
   },
   watch: {
-    actives: {
+    balance: {
       handler() {
-        this.updateData();
-        this.$data._chart.destroy();
-        this.renderChart(this.chartdata, this.options);
+        this.refreshChart();
       },
     },
   },

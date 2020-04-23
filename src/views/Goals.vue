@@ -38,7 +38,7 @@ export default {
       const balance = this.$store.state.balance;
       const targetValue = (balance * active.desiredPctg) / 100;
       const realValue = active.price * active.quotes;
-      return (targetValue - realValue).toFixed(2);
+      return Number((targetValue - realValue).toFixed(2));
     }
   }
 };

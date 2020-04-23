@@ -1,7 +1,11 @@
 <template>
   <v-container class="pa-0">
     <transition name="form-appear">
-      <CreationForm v-if="isCreating" :onCancel="toogleCreation" />
+      <CreationForm
+        v-if="isCreating"
+        :onCancel="toogleCreation"
+        :activePriceList="activePriceList"
+      />
     </transition>
     <div class="mt-12" v-if="!isCreating">
       <PromptCreation :onConfirm="toogleCreation" />
@@ -11,6 +15,7 @@
 <script>
 import CreationForm from "./CreationForm";
 import PromptCreation from "./PromptCreation";
+import api from "../../services/api";
 
 export default {
   name: "CreateWallet",
@@ -19,10 +24,13 @@ export default {
     CreationForm
   },
   data: () => ({
-    isCreating: false
+    isCreating: false,
+    activePriceList: []
   }),
-  created() {
+  async created() {
     this.$store.commit("toogleBottomNav");
+    const res = await api.get();
+    this.activePriceList = res.data;
   },
   methods: {
     toogleCreation() {

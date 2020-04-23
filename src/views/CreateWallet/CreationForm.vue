@@ -7,13 +7,15 @@
 
       <v-row v-for="(active, index) in actives" :key="index" justify="space-between" class="px-3">
         <v-col cols="4" align-self="center">
-          <v-text-field
+          <v-autocomplete
+            :items="activeOptions"
             solo
+            allow-overflow
             v-model="active.ticker"
             label="Ticker"
             max-width="20"
             class="upper-input"
-          ></v-text-field>
+          ></v-autocomplete>
         </v-col>
         <v-col cols="2">
           <v-radio-group class="my-0" :mandatory="true" v-model="active.type">
@@ -70,14 +72,23 @@ export default {
     onCancel: {
       type: Function,
       required: true
+    },
+    activePriceList: {
+      type: Array,
+      required: true
     }
   },
   data: () => ({
     snackbar: false,
     actives: Array.from({ length: 3 }, () => ({
       ...defaultActive
-    }))
+    })),
+    activeOptions: [],
+    activePriceList: []
   }),
+  async created() {
+    this.activeOptions = this.activePriceList.map(active => active.ticker);
+  },
   methods: {
     handleNewLine() {
       this.actives.push({ ...defaultActive });
@@ -93,6 +104,7 @@ export default {
           ActiveModel.add(active.ticker, active.type, active.desiredPctg)
       );
       this.$store.commit("setActiveList", this.actives);
+      this.$store.commit("updatePrices", this.activePriceList);
       this.$store.commit("toogleBottomNav");
       this.$router.replace("/consolidada");
     }

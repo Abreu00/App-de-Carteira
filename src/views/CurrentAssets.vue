@@ -20,12 +20,7 @@
       <v-list>
         <div v-for="(active, index) in actives" :key="index">
           <v-divider class="blue lighten-3" />
-          <OnWalletActive
-            :ticker="active.ticker"
-            :vuetifyColor="colors[index]"
-            :desiredPctg="active.desiredPctg"
-            :currentPctg="getRealPercentage(active)"
-          />
+          <OnWalletActive :active="active" :vuetifyColor="colors[index]" />
         </div>
       </v-list>
     </v-card>
@@ -68,7 +63,6 @@ export default {
       return this.actives.map(active => active.ticker);
     }
   },
-  async created() {},
   methods: {
     tooglePopUp(_, isBuying) {
       this.popup = {

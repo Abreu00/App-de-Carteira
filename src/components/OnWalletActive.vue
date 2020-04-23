@@ -2,7 +2,7 @@
   <v-list-item>
     <v-list-item-content class="pb-0 pt-2">
       <v-list-item-title class="title">
-        {{ ticker }}
+        {{ active.ticker }}
         <v-badge :color="vuetifyColor" offset-y="2" offset-x="-1" />
       </v-list-item-title>
       <v-container>
@@ -12,7 +12,7 @@
         </v-row>
         <v-row justify="space-between">
           <p class="pa-0 mr-0">Peso desejado</p>
-          <p>{{ desiredPctg }}%</p>
+          <p>{{ active.desiredPctg }}%</p>
         </v-row>
       </v-container>
     </v-list-item-content>
@@ -23,21 +23,22 @@
 export default {
   name: "OnWalletActives",
   props: {
-    ticker: {
-      type: String,
+    active: {
+      type: Object,
       required: true
     },
     vuetifyColor: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    balance() {
+      return this.$store.state.balance;
     },
-    desiredPctg: {
-      type: Number,
-      required: true
-    },
-    currentPctg: {
-      type: String,
-      required: true
+    currentPctg() {
+      const { price, quotes } = this.active;
+      return this.balance > 0 ? ((price * quotes) / this.balance) * 100 : 0;
     }
   }
 };
