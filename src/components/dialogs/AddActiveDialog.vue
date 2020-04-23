@@ -1,10 +1,13 @@
 <template>
   <v-dialog v-model="visible" max-width="400" @click:outside="close">
     <v-card class="px-4 pb-2">
-      <v-card-title class="px-0">
-        {{
-        isBuying ? "Nova compra" : "Nova venda"
-        }}
+      <v-card-title class="px-0 justify-space-between">
+        <span>
+          {{
+          isBuying ? "Nova compra" : "Nova venda"
+          }}
+        </span>
+        <span class="subtitle-2">{{ quotes }}</span>
       </v-card-title>
       <v-container class="py-0 px-2">
         <v-text-field v-if="defaultTicker" label="Ticker" :value="defaultTicker" disabled />
@@ -58,7 +61,8 @@ export default {
     },
     async handleTransaction() {
       const ticker = this.defaultTicker || this.paperName;
-      if (!this.numberOfPapers || !ticker) {
+      if (!ticker || this.numberOfPapers <= 0 || !this.isSellValid()) {
+        console.log("oi");
         return;
       }
       const transactionQuotes = this.isBuying
@@ -69,6 +73,15 @@ export default {
         transactionQuotes
       });
       this.close();
+    },
+    isSellValid() {
+      /*
+        guarantees user is not selling quotes than he had
+      */
+      if (this.isBuying) return;
+      const sellingQuotes = parseInt(this.numberOfPapers);
+      console.log(sellingQuotes <= this.quotes);
+      return sellingQuotes <= this.quotes;
     },
     integerRule(value) {
       return Number.isInteger(parseFloat(value)) || "Valor deve ser inteiro";
@@ -88,6 +101,13 @@ export default {
       set(value) {
         this.$emit("input", value);
       }
+    },
+    quotes() {
+      const ticker = this.defaultTicker || this.paperName;
+      if (ticker) {
+        return this.$store.getters.getActive(ticker).quotes;
+      }
+      return "";
     }
   }
 };

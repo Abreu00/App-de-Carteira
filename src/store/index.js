@@ -53,6 +53,9 @@ export default new Vuex.Store({
       state.activeList = [];
     },
   },
-  actions: {},
-  modules: {},
+  getters: {
+    getActive: (state) => (ticker) => {
+      return state.activeList.find((active) => active.ticker === ticker);
+    },
+  },
 });
