@@ -8,6 +8,15 @@ export default {
       type: Array,
       required: true,
     },
+    activeDataHandler: {
+      /**
+       * Function that receives an active as param
+       * and returns how the chart should interpret
+       * this active to generate data
+       */
+      type: Function,
+      required: true,
+    },
   },
   data: function() {
     return {
@@ -17,7 +26,7 @@ export default {
           {
             label: "Data",
             backgroundColor: COLORS.map((color) => color.hex),
-            data: this.actives.map((active) => this.calcRealPctg(active)),
+            data: this.actives.map(this.activeDataHandler),
             borderWidth: 0,
           },
         ],
@@ -52,7 +61,7 @@ export default {
         datasets: [
           {
             ...this.chartdata.datasets[0],
-            data: this.actives.map((active) => this.calcRealPctg(active)),
+            data: this.actives.map(this.activeDataHandler),
           },
         ],
       };

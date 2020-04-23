@@ -14,7 +14,7 @@
       </v-card-title>
       <v-container>
         <ChartContainer>
-          <Doughnut :actives="actives" />
+          <Doughnut :actives="actives" :activeDataHandler="getRealPercentage" />
         </ChartContainer>
       </v-container>
       <v-list>
@@ -71,7 +71,9 @@ export default {
       };
     },
     getRealPercentage(active) {
-      return (((active.price * active.quotes) / this.balance) * 100).toFixed(2);
+      return Number(
+        (((active.price * active.quotes) / this.balance) * 100).toFixed(2)
+      );
     }
   }
 };

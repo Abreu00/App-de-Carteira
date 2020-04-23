@@ -19,7 +19,7 @@
           <v-col xl="10" lg="10" md="8" sm="8" xs="6" cols="6">
             <div class="limit">
               <ChartContainer>
-                <Doughnut :actives="actives" />
+                <Doughnut :actives="actives" :activeDataHandler="chartDataHandler" />
               </ChartContainer>
             </div>
           </v-col>
@@ -54,10 +54,12 @@ export default {
   },
   methods: {
     cleanWallet() {
-      // Toogle popup de confimação
       ActiveModel.clear();
       this.$store.commit("clearActiveList");
       this.$router.replace("/createwallet");
+    },
+    chartDataHandler(active) {
+      return active.desiredPctg;
     }
   },
   computed: {
