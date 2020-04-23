@@ -5,7 +5,7 @@
       <v-icon class="ml-1 mb-1 green--text">local_atm</v-icon>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn icon @click="handleClick">
+    <v-btn icon to="/about">
       <v-icon>help_outline</v-icon>
     </v-btn>
   </v-app-bar>
@@ -13,11 +13,6 @@
 
 <script>
 export default {
-  name: "Header",
-  methods: {
-    handleClick() {
-      console.log("click");
-    }
-  }
+  name: "Header"
 };
 </script>

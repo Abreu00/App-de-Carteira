@@ -4,6 +4,7 @@ import CurrentAssets from "../views/CurrentAssets";
 import Goals from "../views/Goals";
 import Consolidada from "../views/Consolidada";
 import CreateWallet from "../views/CreateWallet/";
+import About from "../views/About";
 
 Vue.use(VueRouter);
 
@@ -11,29 +12,34 @@ const routes = [
   {
     path: "/",
     name: "CurrentAssets",
-    component: CurrentAssets
+    component: CurrentAssets,
   },
   {
     path: "/goals",
     name: "Goals",
-    component: Goals
+    component: Goals,
   },
   {
     path: "/consolidada",
     name: "Consolidada",
-    component: Consolidada
+    component: Consolidada,
   },
   {
     path: "/createWallet",
     name: "CreateWallet",
-    component: CreateWallet
-  }
+    component: CreateWallet,
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: About,
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;

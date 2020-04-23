@@ -24,7 +24,7 @@
             </div>
           </v-col>
           <v-col xl="2" lg="2" md="2" sm="2" xs="6">
-            <div v-for="(active, index) in actives" :key="index" class="nowrap">
+            <div v-for="(active, index) in actives" :key="index" class="text-no-wrap">
               <v-badge :color="colors[index]" dot offset-y="0" offset-x="14" />
               <span class="pa-0 mb-1 caption">{{ `${active.ticker} ${active.desiredPctg}%` }}</span>
             </div>
@@ -83,7 +83,4 @@ export default {
 };
 </script>
 <style scoped>
-.nowrap {
-  white-space: nowrap;
-}
 </style>
