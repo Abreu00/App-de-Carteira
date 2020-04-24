@@ -3,7 +3,7 @@
     <v-card>
       <v-card-title class="justify-space-between">
         <span>Carteira Atual</span>
-        <div>
+        <div v-if="balance > 0">
           <v-btn icon @click="tooglePopUp($event, false)" class="red--text mr-1">
             <v-icon>remove_circle</v-icon>
           </v-btn>
@@ -12,10 +12,16 @@
           </v-btn>
         </div>
       </v-card-title>
-      <v-container>
+      <v-container class="relative">
         <ChartContainer>
           <Doughnut :actives="actives" :activeDataHandler="getRealPercentage" />
         </ChartContainer>
+        <div class="absolute d-flex flex-column align-center" v-if="balance <= 0">
+          <p class="ma-0 title">Você Ainda não possui ativos</p>
+          <v-btn class="green--text large-btn" icon @click="tooglePopUp($event, true)">
+            <v-icon size="120">add_circle</v-icon>
+          </v-btn>
+        </div>
       </v-container>
       <v-list>
         <div v-for="(active, index) in actives" :key="index">
@@ -47,7 +53,8 @@ export default {
     popup: {
       isVisible: false,
       isBuying: null
-    }
+    },
+    message: "Você Ainda não possui ativos"
   }),
   computed: {
     balance() {
@@ -78,4 +85,18 @@ export default {
   }
 };
 </script>
-<style></style>
+<style scoped>
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.large-btn {
+  height: 9rem;
+  width: 9rem;
+}
+</style>

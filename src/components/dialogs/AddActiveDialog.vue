@@ -62,7 +62,7 @@ export default {
     async handleTransaction() {
       const ticker = this.defaultTicker || this.paperName;
       if (!ticker || this.numberOfPapers <= 0 || !this.isSellValid()) {
-        console.log("oi");
+        console.log(ticker, this.numberOfPapers, !this.isSellValid());
         return;
       }
       const transactionQuotes = this.isBuying
@@ -78,9 +78,8 @@ export default {
       /*
         guarantees user is not selling quotes than he had
       */
-      if (this.isBuying) return;
+      if (this.isBuying) return true;
       const sellingQuotes = parseInt(this.numberOfPapers);
-      console.log(sellingQuotes <= this.quotes);
       return sellingQuotes <= this.quotes;
     },
     integerRule(value) {
