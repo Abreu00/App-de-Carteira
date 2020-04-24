@@ -66,13 +66,6 @@ export default {
         ],
       };
     },
-    calcRealPctg(active) {
-      const { balance } = this.$store.state;
-      const realPctg = Number(
-        (((active.price * active.quotes) / balance) * 100).toFixed(2)
-      );
-      return realPctg;
-    },
     refreshChart() {
       this.updateData();
       this.$data._chart.destroy();

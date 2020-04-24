@@ -22,8 +22,8 @@ export default new Vuex.Store({
         (active) => active.ticker === ticker
       );
       const newQuotesValue = active.quotes + transactionQuotes;
+      state.balance += transactionQuotes * active.price;
       active.quotes = newQuotesValue;
-      state.balance += transactionQuotes;
       ActiveModel.update(ticker, "quotes", newQuotesValue);
     },
     updateBalance(state) {

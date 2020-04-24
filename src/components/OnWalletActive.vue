@@ -7,12 +7,12 @@
       </v-list-item-title>
       <v-container>
         <v-row justify="space-between">
-          <p class="pa-0 mr-0">Peso atual</p>
-          <p>{{ currentPctg }}%</p>
+          <p class="pa-0 mr-0">Peso desejado</p>
+          <p>{{ active.desiredPctg.toFixed(2) }}%</p>
         </v-row>
         <v-row justify="space-between">
-          <p class="pa-0 mr-0">Peso desejado</p>
-          <p>{{ active.desiredPctg }}%</p>
+          <p class="pa-0 mr-0">Peso atual</p>
+          <p>{{ currentPctg.toFixed(2) }}%</p>
         </v-row>
       </v-container>
     </v-list-item-content>

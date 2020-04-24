@@ -78,6 +78,12 @@ export default {
       };
     },
     getRealPercentage(active) {
+      const pctg = (
+        ((active.price * active.quotes) / this.balance) *
+        100
+      ).toFixed(2);
+
+      console.log(active.ticker, pctg, this.balance);
       return Number(
         (((active.price * active.quotes) / this.balance) * 100).toFixed(2)
       );

@@ -35,7 +35,6 @@ export default {
   methods: {
     toogleCreation() {
       this.isCreating = !this.isCreating;
-      console.log(this.$store.state.activeList);
     }
   }
 };
