@@ -11,7 +11,7 @@
       <v-card-subtitle class="subtitle-2">Criado por Fábio de Abreu</v-card-subtitle>
       <v-card-text
         class="text-justify"
-      >FreakProof Wallet é um app no formato de PWA para consolidação de carteira de investimentos em renda variavel.A partir de uma carteira consolidada criada pelo investidor o app mostra de maneira elegante a situação de seu investimentos fazendo incentivando a compra dos ativos buscando sempre atingir a carteira consolidada desejada. Nesse sentido, as informações para o investidor gerir sua carteira estão disponiveis sem que aconteça exibição dos preços atuais do mercado, dessa forma evitando que o investidor atue por impulso em momentos de alta votalidade do mercado, o que pode causar significativas perdas em seu portfolio.</v-card-text>
+      >FreakProof Wallet é um app no formato de PWA para consolidação de carteira de investimentos em renda variavel. A partir de uma carteira consolidada criada pelo investidor o app mostra de maneira elegante a situação de seu investimentos incentivando a compra de ativos de forma a sempre buscar atingir a sua carteira ideal. Nesse sentido, as informações para o investidor gerir sua carteira estão disponiveis sem que aconteça exibição dos preços atuais do mercado, dessa forma evitando que o investidor atue por impulso em momentos de alta volatilidade no mercado, o que pode causar significativas perdas em seu portfolio.</v-card-text>
       <v-row class="justify-center justify-sm-end px-sm-6">
         <v-btn
           small

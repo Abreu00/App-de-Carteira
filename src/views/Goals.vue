@@ -3,9 +3,7 @@
     <Active
       v-for="(active, index) in $store.state.activeList"
       :key="index"
-      :ticker="active.ticker"
-      :difference="calc(active)"
-      :quotes="active.quotes"
+      :active="active"
       @click.native="activeClick($event, active.ticker)"
     />
     <AddActiveDialog v-model="popup.isVisible" :defaultTicker="popup.ticker" />
@@ -33,12 +31,6 @@ export default {
         isVisible: true,
         ticker
       };
-    },
-    calc(active) {
-      const balance = this.$store.state.balance;
-      const targetValue = (balance * active.desiredPctg) / 100;
-      const realValue = active.price * active.quotes;
-      return Number((targetValue - realValue).toFixed(2));
     }
   }
 };

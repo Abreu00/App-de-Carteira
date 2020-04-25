@@ -16,7 +16,7 @@
         <ChartContainer>
           <Doughnut :actives="actives" :activeDataHandler="getRealPercentage" />
         </ChartContainer>
-        <div class="absolute d-flex flex-column align-center" v-if="balance <= 0">
+        <div class="absolute d-flex flex-column align-center" v-if="balance === 0">
           <p class="ma-0 title">Você Ainda não possui ativos</p>
           <v-btn class="green--text large-btn" icon @click="tooglePopUp($event, true)">
             <v-icon size="120">add_circle</v-icon>
@@ -78,12 +78,6 @@ export default {
       };
     },
     getRealPercentage(active) {
-      const pctg = (
-        ((active.price * active.quotes) / this.balance) *
-        100
-      ).toFixed(2);
-
-      console.log(active.ticker, pctg, this.balance);
       return Number(
         (((active.price * active.quotes) / this.balance) * 100).toFixed(2)
       );

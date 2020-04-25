@@ -12,8 +12,8 @@
       <p class="mb-0 font-weight-bold title">R${{ valueIndicator }}</p>
       <p
         class="font-weight-bold text-center mb-0 text-uppercase display-1 force-center"
-      >{{ ticker }}</p>
-      <p class="font-weight-bold text-right align-self-start mb-0 subtitle-2">{{ quotes }}</p>
+      >{{ active.ticker }}</p>
+      <p class="font-weight-bold text-right align-self-start mb-0 subtitle-2">{{ active.quotes }}</p>
     </v-container>
   </v-card>
 </template>
@@ -21,24 +21,23 @@
 export default {
   name: "Active",
   props: {
-    ticker: {
-      type: String,
-      required: true
-    },
-    difference: {
-      /* Difference between expected value and total active value*/
-      type: Number,
-      required: true
-    },
-    quotes: {
-      /* How many quotes of this active does the user have */
-      type: Number,
+    active: {
+      type: Object,
       required: true
     }
   },
   computed: {
+    balance() {
+      return this.$store.state.balance;
+    },
+    difference() {
+      const { price, quotes, desiredPctg } = this.active;
+      const targetAmount = (this.balance * desiredPctg) / 100;
+      const realValue = price * quotes;
+      return targetAmount - realValue;
+    },
     valueIndicator() {
-      return Math.abs(this.difference);
+      return Math.abs(this.difference).toFixed(2);
     },
     isAboveExpected() {
       /* returns if the user has more or less of this active than he should, according to his wallet plan */

@@ -83,8 +83,7 @@ export default {
     actives: Array.from({ length: 3 }, () => ({
       ...defaultActive
     })),
-    activeOptions: [],
-    activePriceList: []
+    activeOptions: []
   }),
   async created() {
     this.activeOptions = this.activePriceList.map(active => active.ticker);

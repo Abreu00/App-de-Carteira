@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     isNavEnabled: true,
     activeList: [],
-    balance: 0,
+    balance: -1,
   },
   mutations: {
     toogleBottomNav(state) {

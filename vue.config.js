@@ -8,14 +8,7 @@ module.exports = {
     appleMobileWebAppStatusBarStyle: "black",
     manifestOptions: {
       name: "FreakProof Wallet",
-      short_ame: "FreakProof"
+      short_ame: "FreakProof",
     },
-    // configure the workbox plugin
-    workboxPluginMode: "InjectManifest",
-    workboxOptions: {
-      // swSrc is required in InjectManifest mode.
-      swSrc: "dev/sw.js"
-      // ...other Workbox options...
-    }
-  }
+  },
 };
