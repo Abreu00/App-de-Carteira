@@ -1,5 +1,6 @@
 <template>
-  <v-container class="pa-0">
+  <v-progress-circular v-if="loading" class="center" color="amber darken-4" :indeterminate="true" />
+  <v-container v-else class="pa-0">
     <transition name="form-appear">
       <CreationForm
         v-if="isCreating"
@@ -36,6 +37,11 @@ export default {
     toogleCreation() {
       this.isCreating = !this.isCreating;
     }
+  },
+  computed: {
+    loading() {
+      return this.activePriceList.length === 0;
+    }
   }
 };
 </script>
@@ -56,5 +62,11 @@ export default {
 .form-appear-leave-to {
   transform: translateX(100%);
   opacity: 0;
+}
+.center {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
