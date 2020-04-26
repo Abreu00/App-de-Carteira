@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="justify-space-between">
+      <v-card-title class="justify-space-between mx-sm-0 mx-n2">
         Carteira Consolidada
         <v-menu :offset-y="true">
           <template v-slot:activator="{ on }">
@@ -15,25 +15,16 @@
         </v-menu>
       </v-card-title>
       <v-container class="px-2">
-        <v-row align="start" justify="space-between">
-          <v-col xl="10" lg="10" md="8" sm="8" xs="6" cols="6">
-            <div class="limit">
-              <ChartContainer>
-                <Doughnut :actives="actives" :activeDataHandler="chartDataHandler" />
-              </ChartContainer>
-            </div>
-          </v-col>
-          <v-col xl="2" lg="2" md="2" sm="2" xs="6">
-            <div v-for="(active, index) in actives" :key="index" class="text-no-wrap">
-              <v-badge :color="colors[index]" dot offset-y="0" offset-x="14" />
-              <span class="pa-0 mb-1 caption">{{ `${active.ticker} ${active.desiredPctg}%` }}</span>
-            </div>
-            <div v-for="(active, index) in actives" :key="index + 20" class="nowrap">
-              <v-badge :color="colors[index]" dot offset-y="0" offset-x="14" />
-              <span class="pa-0 mb-1 caption">{{ `${active.ticker} ${active.desiredPctg}%` }}</span>
-            </div>
-          </v-col>
+        <v-row class="ml-2 mb-6" justify="center">
+          <div v-for="(active, index) in actives" :key="index" class="mr-6">
+            <v-badge dot :color="colors[index]" offset-x="10" offset-y="-2" />
+            {{active.ticker}}
+            {{active.desiredPctg}}%
+          </div>
         </v-row>
+        <ChartContainer>
+          <Doughnut :actives="actives" :activeDataHandler="chartDataHandler" />
+        </ChartContainer>
       </v-container>
     </v-card>
   </v-container>
@@ -66,23 +57,10 @@ export default {
     actives() {
       return this.$store.state.activeList;
     },
-    activesFirstHalf() {
-      const len = this.actives.length;
-      return this.actives.slice(0, len / 2 + (len % 2));
-    },
-    activesLastHalf() {
-      const len = this.actives.length;
-      return this.actives.slice(Math.ceil(len / 2), len);
-    },
-    lastHalfStartIndex() {
-      const len = this.actives.length;
-      return Math.ceil(len / 2);
-    },
+
     colors() {
       return COLORS.map(color => color.vuetify);
     }
   }
 };
 </script>
-<style scoped>
-</style>

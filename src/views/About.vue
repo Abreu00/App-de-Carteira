@@ -19,7 +19,7 @@
           class="mr-4"
           color="green darken-2"
           outlined
-          href="https://github.com/Abreu00/App-de-Carteira"
+          href="https://github.com/Abreu00/Freak-proof-wallet-frontend"
           target="_blank"
         >Codigo do App</v-btn>
         <v-btn

@@ -5,10 +5,16 @@
         <span>Criar Carteira</span>
       </v-card-title>
 
-      <v-row v-for="(active, index) in actives" :key="index" justify="space-between" class="px-3">
+      <v-row
+        v-for="(active, index) in actives"
+        :key="index"
+        justify="space-between"
+        class="px-2 px-sm-3"
+      >
         <v-col cols="4" align-self="center">
           <v-autocomplete
             :items="activeOptions"
+            append-icon
             solo
             allow-overflow
             v-model="active.ticker"
@@ -17,7 +23,7 @@
             class="upper-input"
           ></v-autocomplete>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="2" class="ml-n10">
           <v-radio-group class="my-0" :mandatory="true" v-model="active.type">
             <v-radio label="Ação" value="stock" />
             <v-radio label="FII" value="fii" />
