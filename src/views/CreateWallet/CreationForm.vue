@@ -29,8 +29,18 @@
             <v-radio label="FII" value="fii" />
           </v-radio-group>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="5" md="4" class="px-0 px-sm-2">
+          <v-container class="d-flex justify-center pa-0 d-sm-none mt-3">
+            <v-btn icon class="red--text" @click="updatePctg(active, -1)">
+              <v-icon>remove_circle</v-icon>
+            </v-btn>
+            <span class="mx-1 mt-1">{{ ("0" + active.desiredPctg).slice(-2) }} %</span>
+            <v-btn class="green--text" icon @click="updatePctg(active, 1)">
+              <v-icon>add_circle</v-icon>
+            </v-btn>
+          </v-container>
           <v-slider
+            class="d-none d-sm-block"
             v-model="active.desiredPctg"
             max="20"
             :hint="active.desiredPctg.toString()"
@@ -112,6 +122,9 @@ export default {
       this.$store.commit("updatePrices", this.activePriceList);
       this.$store.commit("toogleBottomNav");
       this.$router.replace("/consolidada");
+    },
+    updatePctg(active, value) {
+      active.desiredPctg += value;
     }
   },
   computed: {
