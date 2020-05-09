@@ -11,8 +11,8 @@ export default new Vuex.Store({
     balance: -1,
   },
   mutations: {
-    toogleBottomNav(state) {
-      state.isNavEnabled = !state.isNavEnabled;
+    toogleBottomNav(state, bool) {
+      state.isNavEnabled = bool !== undefined ? bool : !state.isNavEnabled;
     },
     setActiveList(state, activeList) {
       state.activeList = activeList;

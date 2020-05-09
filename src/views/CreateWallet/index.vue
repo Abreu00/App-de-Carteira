@@ -29,7 +29,7 @@ export default {
     activePriceList: []
   }),
   async created() {
-    this.$store.commit("toogleBottomNav");
+    this.$store.commit("toogleBottomNav", false);
     const res = await api.get();
     this.activePriceList = res.data;
   },

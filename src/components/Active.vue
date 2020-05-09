@@ -9,7 +9,7 @@
     ripple
   >
     <v-container class="d-flex justify-space-between py-1 px-2" fill-height>
-      <p class="mb-0 font-weight-bold title">R${{ valueIndicator }}</p>
+      <p class="mb-0 subtitle-1 font-weight-bold align-self-end">R${{ valueIndicator }}</p>
       <p
         class="font-weight-bold text-center mb-0 text-uppercase display-1 force-center"
       >{{ active.ticker }}</p>
