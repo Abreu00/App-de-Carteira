@@ -1,11 +1,12 @@
 <template>
   <v-container fill-height fluid class="d-flex flex-column justify-center align-center">
-    <p class="title text-center mt-8">
-      Comece criando sua carteira
-      <br />consolidada
+    <p class="title text-center mt-8" @click="change">
+      {{ $t("promptCreateWallet") }}
     </p>
     <div class="text-center">
-      <v-btn color="amber darken-4" dark @click="onConfirm">Criar minha carteira</v-btn>
+      <v-btn color="amber darken-4" dark @click="onConfirm">
+        {{ $t("promptCreateWalletButton")}}
+      </v-btn>
     </div>
   </v-container>
 </template>
@@ -17,6 +18,13 @@ export default {
     onConfirm: {
       type: Function,
       required: true
+    }
+  },
+  methods: {
+    change() {
+      const loc = this.$i18n.locale
+      this.$i18n.locale = loc === 'en' ? 'pt' : 'en'
+
     }
   }
 };
