@@ -35,6 +35,7 @@ export default {
   clearWallet: "Clear wallet",
 
   createdBy: "Created by {author}",
+  aboutTheAppSection: "FreakProof is a PWA app for variable income investment wallet targeting. From a targeted wallet created by the investor, the app shows elegantly the ideal situation of his investments suggesting purchases aiming to accomplish the target wallet. In that sense, the investor will have the information for managing his portfolio, without necessarily looking at current asset valuations, avoiding urge acting in high market volatility times, which can cause significant losses even in good assets portfolios.",
   appCode: "App code",
   apiCode: "Api code",    
 
