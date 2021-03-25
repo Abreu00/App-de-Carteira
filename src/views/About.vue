@@ -8,7 +8,9 @@
         </span>
         <v-icon color="pink lighten-2">favorite</v-icon>
       </v-card-title>
-      <v-card-subtitle class="subtitle-2">Criado por Fábio de Abreu</v-card-subtitle>
+      <v-card-subtitle class="subtitle-2">
+        {{$t("createdBy", {author: "Fábio de Abreu"})}}
+      </v-card-subtitle>
       <v-card-text
         class="text-justify"
       >FreakProof Wallet é um app no formato de PWA para consolidação de carteira de investimentos em renda variavel. A partir de uma carteira consolidada criada pelo investidor o app mostra de maneira elegante a situação de seu investimentos incentivando a compra de ativos de forma a sempre buscar atingir a sua carteira ideal. Nesse sentido, as informações para o investidor gerir sua carteira estão disponiveis sem que aconteça exibição dos preços atuais do mercado, dessa forma evitando que o investidor atue por impulso em momentos de alta volatilidade no mercado, o que pode causar significativas perdas em seu portfolio.</v-card-text>
@@ -21,7 +23,7 @@
           outlined
           href="https://github.com/Abreu00/Freak-proof-wallet-frontend"
           target="_blank"
-        >Codigo do App</v-btn>
+        >{{ $t("appCode") }}</v-btn>
         <v-btn
           small
           rounded
@@ -29,7 +31,7 @@
           outlined
           href="https://github.com/Abreu00/flask-stock-api"
           target="_blank"
-        >Codigo da API</v-btn>
+        >{{ $t("apiCode") }}</v-btn>
       </v-row>
     </v-card>
   </v-container>

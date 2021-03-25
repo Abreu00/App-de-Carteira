@@ -7,15 +7,15 @@
     background-color="grey lighten-5"
   >
     <v-btn to="/">
-      <span>Atual</span>
+      <span>{{ $t("current") }}</span>
       <v-icon>account_balance</v-icon>
     </v-btn>
     <v-btn to="/consolidada">
-      <span>Consolidada</span>
+      <span>{{ $t("target") }}</span>
       <v-icon>bar_chart</v-icon>
     </v-btn>
     <v-btn to="/goals">
-      <span>Metas</span>
+      <span>{{ $t("goals") }}</span>
       <v-icon>assignment_turned_in</v-icon>
     </v-btn>
   </v-bottom-navigation>

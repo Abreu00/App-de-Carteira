@@ -2,7 +2,7 @@
   <v-container>
     <v-card>
       <v-card-title class="justify-space-between">
-        <span>Carteira Atual</span>
+        <span>{{ $t("currentWallet") }}</span>
         <div v-if="balance > 0">
           <v-btn icon @click="tooglePopUp($event, false)" class="red--text mr-1">
             <v-icon>remove_circle</v-icon>
@@ -17,7 +17,7 @@
           <Doughnut :actives="actives" :activeDataHandler="getRealPercentage" />
         </ChartContainer>
         <div class="absolute d-flex flex-column align-center" v-if="balance === 0">
-          <p class="ma-0 title">Você Ainda não possui ativos</p>
+          <p class="ma-0 title">{{ $t("youDontHaveAnyAssets") }}</p>
           <v-btn class="green--text large-btn" icon @click="tooglePopUp($event, true)">
             <v-icon size="120">add_circle</v-icon>
           </v-btn>

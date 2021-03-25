@@ -2,7 +2,7 @@
   <v-container>
     <v-card>
       <v-card-title class="justify-space-between mx-sm-0 mx-n2">
-        Carteira Consolidada
+        {{ $t("targetWallet") }}
         <v-menu :offset-y="true">
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on">
@@ -10,7 +10,7 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item @click="cleanWallet">Limpar Carteira</v-list-item>
+            <v-list-item @click="cleanWallet">{{ $t("clearWallet") }}</v-list-item>
           </v-list>
         </v-menu>
       </v-card-title>
