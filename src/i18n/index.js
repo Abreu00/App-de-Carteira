@@ -10,7 +10,6 @@ const messages = {
     en: en_us,
     pt: pt_br
 };
-console.log('iosaio');
 
 export default new VueI18n({
     locale: 'pt',

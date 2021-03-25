@@ -2,7 +2,7 @@
   <v-container class="px-2">
     <v-card class="pb-4" raised shaped>
       <v-card-title class="px-3">
-        <span>Criar Carteira</span>
+        <span> {{ $t("createWallet") }}</span>
       </v-card-title>
 
       <v-row
@@ -25,8 +25,8 @@
         </v-col>
         <v-col cols="2" class="ml-n10">
           <v-radio-group class="my-0" :mandatory="true" v-model="active.type">
-            <v-radio label="Ação" value="stock" />
-            <v-radio label="FII" value="fii" />
+            <v-radio :label="stock" value="stock" />
+            <v-radio :label="reit" value="fii" />
           </v-radio-group>
         </v-col>
         <v-col cols="5" md="4" class="px-0 px-sm-2">
@@ -50,10 +50,16 @@
         </v-col>
       </v-row>
 
-      <span class="d-block text-right subtitle-1 font-weight-bold mx-4">Alocado - {{ total }}%</span>
+      <span class="d-block text-right subtitle-1 font-weight-bold mx-4">
+        {{ $t("designated") }} - {{ total }}%
+      </span>
       <v-card-actions class="justify-space-between mx-4 mt-2">
-        <v-btn text color="red" @click="onCancel">Cancelar</v-btn>
-        <v-btn text color="blue darken2" @click="handleSave">Salvar</v-btn>
+        <v-btn text color="red" @click="onCancel">
+          {{ $t("cancel") }}
+        </v-btn>
+        <v-btn text color="blue darken2" @click="handleSave">
+          {{ $t("save") }}
+        </v-btn>
         <v-btn icon color="blue darken2" @click="handleNewLine">
           <v-icon>add</v-icon>
         </v-btn>
@@ -66,8 +72,10 @@
       top
       class="blue--text text--lighten-4"
     >
-      <span>Alocação deve ser de 100%</span>
-      <v-btn text @click="snackbar = false" color="blue lighten-4">fechar</v-btn>
+      <span>{{ $t("walletShouldBeFullyDesignated") }}</span>
+      <v-btn text @click="snackbar = false" color="blue lighten-4">
+        {{ $t("close") }}
+      </v-btn>
     </v-snackbar>
   </v-container>
 </template>
@@ -136,8 +144,14 @@ export default {
         }
       });
       return sum;
+    },
+    stock() {
+      return this.$t("stock");
+    },
+    reit() {
+      return this.$t("reit");
     }
-  }
+  },
 };
 </script>
 
